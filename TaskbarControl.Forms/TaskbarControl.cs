@@ -163,19 +163,6 @@ namespace TaskbarControl.Forms
             UpdateSizeAndPosition();
         }
 
-        private void UpdateTaskbarWindowAreas()
-        {
-            _notifyArea.AreaRects =
-                (Win32Native.GetNativeRect(_notifyArea.Handle, NativeRectType.DesktopRelative),
-            Win32Native.GetNativeRect(_notifyArea.Handle, NativeRectType.InternalClientArea));
-            _appIconArea.AreaRects =
-                (Win32Native.GetNativeRect(_appIconArea.Handle, NativeRectType.DesktopRelative),
-                    Win32Native.GetNativeRect(_appIconArea.Handle, NativeRectType.InternalClientArea));
-            _toolbarArea.AreaRects =
-                (Win32Native.GetNativeRect(_toolbarArea.Handle, NativeRectType.DesktopRelative),
-                    Win32Native.GetNativeRect(_toolbarArea.Handle, NativeRectType.InternalClientArea));
-        }
-
         private void UpdateSizeAndPosition()
         {
             UpdateTaskbarWindowAreas();
@@ -198,6 +185,19 @@ namespace TaskbarControl.Forms
                 0,
                 taskbarControlRect.Left - _toolbarArea.AreaRects.DesktopRelative.Left,
                 _toolbarArea.AreaRects.ClientRelative.Bottom, SizePositionFlag.NoOwnerZOrder);
+        }
+
+        private static void UpdateTaskbarWindowAreas()
+        {
+            _notifyArea.AreaRects =
+                (Win32Native.GetNativeRect(_notifyArea.Handle, NativeRectType.InternalClientArea),
+                    Win32Native.GetNativeRect(_notifyArea.Handle, NativeRectType.DesktopRelative));
+            _appIconArea.AreaRects =
+                (Win32Native.GetNativeRect(_appIconArea.Handle, NativeRectType.InternalClientArea),
+                    Win32Native.GetNativeRect(_appIconArea.Handle, NativeRectType.DesktopRelative));
+            _toolbarArea.AreaRects =
+                (Win32Native.GetNativeRect(_toolbarArea.Handle, NativeRectType.InternalClientArea),
+                    Win32Native.GetNativeRect(_toolbarArea.Handle, NativeRectType.DesktopRelative));
         }
     }
 }
